@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe Método Tranquilito</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f2; --card:#ffffff; --ink:#2a2733; --muted:#6d6878; --line:#e8e2d8;
+  --acc:#5b4b9a; --acc-soft:#ece8f7; --ok:#2f7d55; --ok-soft:#e3f2ea;
+  --warn:#a5661c; --warn-soft:#fbefdc; --bad:#a83a3a; --bad-soft:#f8e3e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+    --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+    --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+  --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+  --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Montserrat,system-ui,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:32px 16px 80px}
+header .kicker{color:var(--acc);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.sub{color:var(--muted);margin:0 0 24px}
+h2{font-size:22px;margin:44px 0 12px;padding-top:8px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:12px 0}
+.tldr{background:var(--acc-soft);border-color:transparent}
+.tldr li{margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-size:24px;line-height:1.2}
+.kpi span{color:var(--muted);font-size:13px}
+.tablewrap{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.on{background:var(--ok-soft);color:var(--ok)}
+.off{background:var(--line);color:var(--muted)}
+.win{background:var(--ok-soft);color:var(--ok)}
+.warnt{background:var(--warn-soft);color:var(--warn)}
+.day{border-left:4px solid var(--acc);padding-left:14px;margin:18px 0}
+.day h3{margin-top:0}
+.day ul{padding-left:18px;margin:6px 0}
+.day li{margin:7px 0}
+.why{color:var(--muted);font-size:14px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.ba div{border-radius:10px;padding:10px 12px;font-size:14px}
+.ba .b{background:var(--bad-soft)}
+.ba .a{background:var(--ok-soft)}
+.ba small{display:block;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.06em;opacity:.8}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:0}
+.rule .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--acc);color:var(--card);display:grid;place-items:center;font-weight:800;font-size:13px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin:10px 0}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+ul.check li:before{content:"→";position:absolute;left:4px;color:var(--acc);font-weight:800}
+footer{color:var(--muted);font-size:13px;margin-top:48px}
+@media (max-width:560px){h1{font-size:24px}.ba{grid-template-columns:1fr}}
+</style>
+<style>
+.pieces{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}
+.piece{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;min-width:0}
+.piece video,.piece img{width:100%;border-radius:10px;display:block;background:#000}
+.piece h3{margin:10px 0 4px;font-size:16px}
+.piece .why{margin:4px 0}
+.copy{white-space:pre-line;font-size:13px;background:var(--bg);border-radius:8px;padding:8px 10px;margin-top:8px}
+.strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.strip img{flex:0 0 78%;scroll-snap-align:start;width:78%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Método Tranquilito · Informe para Maca y Karen</div>
+  <h1>Del lunes 16-11 a la tarde al miércoles 18-11 a la noche</h1>
+  <p class="sub">Sigue al informe anterior (14-11 → 16-11 18:00). Fecha de corte: miércoles 18-11, 18:45 (hora de Argentina).</p>
+</header>
+
+<div class="card tldr">
+  <strong>En 30 segundos</strong>
+  <ul>
+    <li><b>Una venta más, la 4ª:</b> martes 17-11 a la noche, y con el <b>primer producto extra del carrito</b> vendido (cobró $26.980 en vez de $18.990).</li>
+    <li><b>Test 2 terminado</b> con la regla de corte: los 5 anuncios apagados. 2 vendieron una vez cada uno, ninguno hizo la segunda.</li>
+    <li><b>Diagnóstico:</b> los anuncios funcionan; lo que falla es la <b>primera pantalla de la página de venta</b>. De cada 100 visitas compra 1,5 y necesitamos más de 3 para ganar plata.</li>
+    <li><b>Oferta más fuerte:</b> se sumó un regalo, "Para vos, mamá", y la página se rearmó como la marca brasileña que más vende.</li>
+    <li><b>Test 3 prendido hoy a las 18:36:</b> 5 anuncios nuevos, cada uno copiado de un ángulo que hace meses vende afuera.</li>
+    <li><b>Metas con fecha</b> y la primera semana de orgánico ya programada.</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><b>4</b><span>ventas reales desde el arranque</span></div>
+  <div class="kpi"><b>~USD 116</b><span>gastado en Meta (Test 1 + Test 2)</span></div>
+  <div class="kpi"><b>1,5 %</b><span>de las visitas compra (vara: 2 %; para ganar: ~3,4 %)</span></div>
+  <div class="kpi"><b>~USD 29</b><span>costo por venta (deja ~USD 13)</span></div>
+</div>
+<p class="why">Lectura honesta: todavía se gasta más de lo que entra. Pero ahora sabemos <b>dónde</b> está el problema. Los anuncios hacen su trabajo (paran el scroll y traen gente con interés); la página es la que no convence lo suficiente en los primeros segundos. Eso se arregla de a un cambio por vez y midiendo.</p>
+
+<h2>1. Test 2: cómo terminó</h2>
+<p>Las ventas se cuentan en la tienda (Utmify e Impultienda), no en Meta. Meta, por ejemplo, no le adjudicó la venta del martes a ningún anuncio, y en la tienda se ve clarito que vino del meme.</p>
+<div class="tablewrap"><table>
+<tr><th>Anuncio</th><th>Gastado</th><th>Ventas reales</th><th>Por qué se apagó</th></tr>
+<tr><td>Placa "dejarlo llorar" (foto nueva)</td><td class="n">USD 11,14</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (miér 09:20)</div></td></tr>
+<tr><td>Video "despertares"</td><td class="n">USD 10,20</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (miér 12:45)</div></td></tr>
+<tr><td>Video "no es la ventana"</td><td class="n">USD 11,80</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (miér 09:20)</div></td></tr>
+<tr><td>Video "Si tu bebé…"</td><td class="n">USD 13,17</td><td class="n"><b>1</b></td><td><span class="tag off">Apagado</span><div class="why">Llegó a USD 13 sin la segunda venta (miér 15:42)</div></td></tr>
+<tr><td>Meme "despertares" (carrusel)</td><td class="n">USD 13,02</td><td class="n"><b>1</b></td><td><span class="tag off">Apagado</span><div class="why">Llegó a USD 13 sin la segunda venta (miér 16:34)</div></td></tr>
+<tr><td><b>Total Test 2</b></td><td class="n"><b>USD 59,33</b></td><td class="n"><b>2</b></td><td></td></tr>
+</table></div>
+<p class="why">Tres cortes salieron con USD 1 a 2 de más porque la revisión automática no estaba programada a tiempo. Ya quedó corregido para el Test 3: revisa cada 20 minutos.</p>
+
+<h3>La venta del martes 17-11 a las 21:44</h3>
+<ul>
+  <li>Del meme "despertares", visto en el feed de Instagram. Pagó con Mercado Pago.</li>
+  <li>Sumó el extra del carrito <b>"Que no se despierte a las 5"</b> ($7.990). Es la primera vez que alguien lo agrega.</li>
+</ul>
+
+<h2>2. El diagnóstico: dónde se pierde la venta</h2>
+<p>Revisamos el camino completo en el orden que enseña la escuela. Se mira paso por paso y se arregla el primero que falla:</p>
+<div class="tablewrap"><table>
+<tr><th>Paso</th><th>Cómo estamos</th><th></th></tr>
+<tr><td>1. ¿El anuncio frena el scroll y se mira?</td><td>Gancho y retención dentro de la vara</td><td><span class="tag win">Bien</span></td></tr>
+<tr><td>2. ¿Los que tocan llegan a la página?</td><td>75 % a 92 % (vara: 65 %)</td><td><span class="tag win">Bien</span></td></tr>
+<tr><td>3. ¿Cuánto cuesta mostrar el anuncio?</td><td>USD 5 a 8 cada mil vistas</td><td><span class="tag win">Bien</span></td></tr>
+<tr><td>4. ¿La página convence?</td><td>1,5 % compra (vara: 2 %; la meta es 3 a 6 %)</td><td><span class="tag warnt">Acá falla</span></td></tr>
+<tr><td>5. ¿El pago anda?</td><td>De los que van a pagar, 1 de cada 4 compra</td><td><span class="tag win">Bien</span></td></tr>
+</table></div>
+<ul>
+  <li><b>Entre 5 y 8 de cada 10 se van en la primera pantalla</b>, en los 10 anuncios por igual. Por eso el problema es la página y no un anuncio en particular.</li>
+  <li><b>Las que compraron decidieron arriba:</b> vieron el precio y fueron directo a pagar, sin leer toda la página.</li>
+  <li><b>Una corrección de nuestra parte:</b> el martes parecía que mucha gente iba a pagar, pero eran nuestras propias pruebas. Sacándolas, el dato real es más bajo. Por eso de ahora en más se mide sin nuestras sesiones.</li>
+  <li><b>Error de proceso:</b> entre el 12 y el 17-11 la página se cambió más de 20 veces. La escuela pide <b>48 horas por cada cambio</b> para poder saber qué funcionó, así que <b>la página queda quieta hasta el jueves 19-11 a las 04:00</b>. Ahí se mide y se hace UN cambio en la primera pantalla.</li>
+</ul>
+
+<h2>3. Qué se hizo, día por día</h2>
+
+<div class="day">
+  <h3>Lunes 16-11 (tarde y noche): metas, orgánico y regalo</h3>
+  <ul>
+    <li><b>Metas con fecha</b>:
+      <ul>
+        <li><b>22-11:</b> primer anuncio con 2 ventas o más a menos de USD 10 cada una.</li>
+        <li><b>29-11:</b> 3 anuncios ganadores y un día sin perder plata.</li>
+        <li><b>06-12:</b> USD 100 por día de inversión.</li>
+        <li><b>~15-12:</b> segundo país.</li>
+        <li><b>31-12:</b> USD 500 por día de ganancia.</li>
+        <li><b>16-01-2027:</b> USD 1.500 por día.</li>
+      </ul>
+      Se revisa cada domingo.</li>
+    <li><b>Orgánico, semana 1 programada</b> en Instagram y Facebook a la vez: 14 reels y 7 carruseles, del lunes 16 a las 21:30 al lunes 23. Cada publicación quedó confirmada en el planificador de Meta. La semana siguiente se programa sola cada domingo.</li>
+    <li><b>Regalo dentro de la oferta: "Para vos, mamá — cómo llegar entera a la noche 10"</b> (valor $14.990, gratis). Va adentro del PDF principal.
+      <div class="ba"><div class="b"><small>Antes</small>"De $59.990 a $18.990", sin regalos.</div><div class="a"><small>Ahora</small>"De $74.980 a $18.990" (el método más el regalo), con la tarjeta del regalo debajo del precio y un renglón "Incluye de regalo" en la página de pago.</div></div>
+    </li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Martes 17-11 (madrugada): la página de venta, rearmada</h3>
+  <p class="why">Tomamos como modelo a Sosseguinho, la marca brasileña que lleva más de 270 días vendiendo esto.</p>
+  <ul>
+    <li><b>Un botón arriba de todo que va directo a pagar</b>, como en la marca brasileña. En total hay 4 botones en la página.</li>
+    <li><b>Precio tachado y cuotas</b> en todos los lugares donde aparece el precio.</li>
+    <li><b>Primera pantalla con foto</b> (la misma mamá con su bebé) y un fondo turquesa que se va aclarando. Se sacó el recuadro de "dolor".</li>
+    <li><b>Más rápida:</b> la foto de arriba carga en 3,0 segundos (antes, 4,6).</li>
+    <li>Resultado del primer día: casi la misma cantidad de gente se iba en la primera pantalla. Es justamente lo que se va a atacar el jueves.</li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Miércoles 18-11: cortes, diagnóstico y Test 3</h3>
+  <ul>
+    <li>Durante el día se apagaron los 5 anuncios del Test 2 con la regla automática (tabla del punto 1).</li>
+    <li><b>Utmify</b> (la herramienta que cuenta las ventas reales) llegó al tope de 30 ventas del plan gratis y dejó de contar. Se pasó al plan pago de USD 29 por mes, que cuenta hasta 1.000 ventas por mes y deja conectar 3 cuentas de anuncios.</li>
+    <li>Diagnóstico completo (punto 2).</li>
+    <li><b>Test 3:</b> se armó el criterio con las reglas de la escuela, se buscaron ángulos que pasen la "regla de 3", se produjeron las 5 piezas y quedaron <b>prendidas a las 18:36</b> (punto 4).</li>
+  </ul>
+</div>
+
+<h2>4. Test 3: las 5 piezas que corren desde hoy</h2>
+<p>Cómo se eligieron:</p>
+<ul>
+  <li><b>4 ángulos nuevos y 1 variación</b> de un anuncio que ya vendió. La escuela pide que la mayoría sean nuevos cuando todavía no hay un ganador.</li>
+  <li>Los ángulos se buscaron <b>por marca</b>: de 7 marcas que hace meses venden esto con muchos anuncios prendidos, pasaron la regla de 3 (3 marcas o más, 14 días o más) <b>"el precio en el gancho"</b> y <b>"no es una fase"</b>.</li>
+  <li>El resto sale de lo que vende hace meses en Sosseguinho y Soy Esa Mamá.</li>
+  <li><b>Edición nueva:</b>
+    <ul>
+      <li>título que entra y se va;</li>
+      <li>subtítulos tipo karaoke;</li>
+      <li>sonidos en las palabras clave;</li>
+      <li>la tapa del método que se mueve cuando se nombra;</li>
+      <li>el regalo que se abre;</li>
+      <li>un cierre distinto en cada video.</li>
+    </ul>
+  </li>
+  <li>Cada pieza tiene USD 5 por día y la misma regla de corte.</li>
+</ul>
+
+<div class="pieces">
+  <div class="piece">
+    <video src="t3-p3.mp4" controls playsinline preload="metadata"></video>
+    <h3>1 · Precio contra la semana agotada</h3>
+    <p class="why">Ángulo nuevo, de Sosseguinho (285 días). Video de 42 s.</p>
+    <div class="copy">Por menos de lo que gastás sobreviviendo a una semana agotada… ☕😵‍💫
+🔁 Levantarte, mecerlo, el chupete, las rutinas, las siestas… y la noche sigue igual
+🧩 Eso no es lo que causa los despertares
+🌱 Método Tranquilito: 3 clases + plan de 10 días, sin dejarlo llorar
+💳 $18.990 · pago único
+🎁 De regalo: el bonus Para vos, mamá</div>
+  </div>
+  <div class="piece">
+    <video src="t3-p4.mp4" controls playsinline preload="metadata"></video>
+    <h3>2 · ¿Estás esperando que se le pase solo?</h3>
+    <p class="why">Ángulo nuevo "no es una fase", de Sosseguinho (254 días). Le habla a la mamá que se resignó. Video de 42 s.</p>
+    <div class="copy">¿Estás esperando que se le pase solo? ⏳
+👶 Muchas mamás esperan meses pensando que va a mejorar solo
+🔁 Rutina nueva, siesta más temprano… y se sigue despertando
+🧩 Nada de eso es lo que define si tu bebé duerme bien
+🌱 Método Tranquilito: 3 clases + plan de 10 días</div>
+  </div>
+  <div class="piece">
+    <video src="t3-v4b.mp4" controls playsinline preload="metadata"></video>
+    <h3>3 · ¿Solo se duerme a upa? (versión B)</h3>
+    <p class="why">Variación de "noche a upa", que vendió en el Test 1: misma voz y mismo texto, con otra primera imagen y otro ritmo. Video de 24 s.</p>
+    <div class="copy">¿Solo se duerme a upa y apenas lo apoyás en la cuna abre los ojos? 🌙
+💛 No estás haciendo nada mal
+🧩 Aprendió a dormirse de una sola forma: en tus brazos
+🌱 Método Tranquilito: en 10 días aprende a dormirse solito</div>
+  </div>
+  <div class="piece">
+    <div class="strip">
+      <img src="c1.jpg" alt="Tarjeta 1" loading="lazy"><img src="c2.jpg" alt="Tarjeta 2" loading="lazy"><img src="c3.jpg" alt="Tarjeta 3" loading="lazy"><img src="c4.jpg" alt="Tarjeta 4" loading="lazy"><img src="c5.jpg" alt="Tarjeta 5" loading="lazy"><img src="c6.jpg" alt="Tarjeta 6" loading="lazy">
+    </div>
+    <h3>4 · "¿Otra vez?" Y ni pasaron 2 horas</h3>
+    <p class="why">Carrusel de 6 tarjetas (deslizá), de Soy Esa Mamá (19 anuncios, 49 días). Sigue la línea del meme que vendió en el Test 2, y cada tarjeta lleva su propio texto.</p>
+  </div>
+  <div class="piece">
+    <img src="mecanismo.jpg" alt="Imagen: los despertares pasan en 3 pasos" loading="lazy">
+    <h3>5 · Los despertares pasan en 3 pasos</h3>
+    <p class="why">Ángulo nuevo, de Sosseguinho (257 días). Imagen que explica por qué se despierta, pensada para la mamá escéptica.</p>
+  </div>
+</div>
+<p class="why">En las 5, el título es "Tu bebé durmiendo de corrido en 10 días 🌙", el botón es "Más información" y el regalo aparece siempre. Las referencias de la competencia no se publican acá.</p>
+
+<h2>5. Lo que sigue</h2>
+<ul class="check">
+  <li><b>Test 3:</b> corte automático cada 20 minutos (USD 10 sin venta; con 1 venta, hasta USD 13). Antes de esos montos no se saca ninguna conclusión.</li>
+  <li><b>Jueves 19-11, 04:00:</b> la página cumple 48 horas quieta. Se mide con Clarity y Meta, sin nuestras sesiones, y se hace <b>un solo cambio</b> en la primera pantalla.</li>
+  <li><b>Extras del carrito y oferta después de la compra:</b> no se tocan hasta tener 10 compradoras (hoy son 4).</li>
+  <li><b>Pedir permiso</b> a las creadoras de TikTok cuyos clips usamos.</li>
+  <li><b>Domingo 22-11:</b> se revisa la primera meta (un anuncio con 2 ventas o más a menos de USD 10 cada una).</li>
+</ul>
+
+<footer>Fuentes: Meta Ads (gastos al corte de cada anuncio), Utmify e Impultienda (ventas reales), Clarity (navegación, sin nuestras sesiones de prueba) y la Biblioteca de Anuncios de Meta. Montos en dólares; la venta es de AR$ 18.990 (≈ USD 12-13 neto).</footer>
+</div>
+</body>
+</html>
