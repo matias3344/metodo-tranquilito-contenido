@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Métricas y buenas prácticas</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f2; --card:#ffffff; --ink:#2a2733; --muted:#6d6878; --line:#e8e2d8;
+  --acc:#5b4b9a; --acc-soft:#ece8f7; --ok:#2f7d55; --ok-soft:#e3f2ea;
+  --warn:#a5661c; --warn-soft:#fbefdc; --bad:#a83a3a; --bad-soft:#f8e3e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+    --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+    --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+  --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+  --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Montserrat,system-ui,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:32px 16px 80px}
+header .kicker{color:var(--acc);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.sub{color:var(--muted);margin:0 0 24px}
+h2{font-size:22px;margin:44px 0 12px;padding-top:8px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:12px 0}
+.tldr{background:var(--acc-soft);border-color:transparent}
+.tldr li{margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-size:24px;line-height:1.2}
+.kpi span{color:var(--muted);font-size:13px}
+.tablewrap{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.on{background:var(--ok-soft);color:var(--ok)}
+.off{background:var(--line);color:var(--muted)}
+.win{background:var(--ok-soft);color:var(--ok)}
+.warnt{background:var(--warn-soft);color:var(--warn)}
+.day{border-left:4px solid var(--acc);padding-left:14px;margin:18px 0}
+.day h3{margin-top:0}
+.day ul{padding-left:18px;margin:6px 0}
+.day li{margin:7px 0}
+.why{color:var(--muted);font-size:14px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.ba div{border-radius:10px;padding:10px 12px;font-size:14px}
+.ba .b{background:var(--bad-soft)}
+.ba .a{background:var(--ok-soft)}
+.ba small{display:block;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.06em;opacity:.8}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:0}
+.rule .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--acc);color:var(--card);display:grid;place-items:center;font-weight:800;font-size:13px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin:10px 0}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+ul.check li:before{content:"→";position:absolute;left:4px;color:var(--acc);font-weight:800}
+footer{color:var(--muted);font-size:13px;margin-top:48px}
+@media (max-width:560px){h1{font-size:24px}.ba{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Método Tranquilito · Para Maca y Karen</div>
+  <h1>Cómo medimos y cómo decidimos</h1>
+  <p class="sub">Las métricas que miramos y las buenas prácticas que fuimos sumando del 12-11 al 18-11. Esta página sirve para cualquier producto que lancemos, no solo para el Tranquilito. Actualizada el miércoles 18-11.</p>
+</header>
+
+<div class="card tldr">
+  <strong>En 30 segundos</strong>
+  <ul>
+    <li><b>Una sola vara:</b> la tabla de "métricas sugeridas" de la escuela (Skool). Nada se juzga "a ojo".</li>
+    <li><b>El número que manda es el costo por venta</b> comparado con lo que deja cada venta. Lo demás sirve para entender <i>por qué</i>.</li>
+    <li><b>El embudo se revisa en orden</b> y se arregla el primer paso que falla, no el que más nos gusta tocar.</li>
+    <li><b>Reglas fijas, sin discutir cada vez:</b> corte de anuncios por gasto, regla de 3 para ángulos nuevos, 48 horas por cada cambio.</li>
+    <li><b>Toda decisión tiene base escrita:</b> primero las herramientas del kit, después la escuela, después los videos de Lucas y Juanpi. Lo que no tiene base no se hace como regla.</li>
+  </ul>
+</div>
+
+<h2>1. Las métricas: qué miramos y con qué vara</h2>
+<p>Primero se miran las <b>ventas y cuánto costó cada una</b>. Si eso no cierra, se baja a las métricas del anuncio y de la página para encontrar dónde se pierde.</p>
+<div class="tablewrap"><table>
+<tr><th>Métrica</th><th>Qué quiere decir</th><th>Vara</th><th>Si falla, el problema está en…</th></tr>
+<tr><td>Gancho</td><td>De cada 100 que ven el video, cuántos se quedan los primeros 3 segundos</td><td class="n">más de 20 %</td><td>el arranque del video</td></tr>
+<tr><td>Retención</td><td>Cuántos lo miran entero</td><td class="n">más de 5 %</td><td>el desarrollo del video</td></tr>
+<tr><td>CTR único</td><td>De cada 100 personas, cuántas tocan el enlace</td><td class="n">más de 1,5 %</td><td>el anuncio no da ganas de saber más</td></tr>
+<tr><td>Calidad de clics</td><td>De los que tocan, cuántos llegan a ver la página</td><td class="n">más de 65 %</td><td>la página carga lento o el link falla</td></tr>
+<tr><td>Costo por mil vistas (CPM)</td><td>Cuánto cobra Meta por mostrar el anuncio</td><td class="n">USD 2 a 10</td><td>cuenta nueva o público chico; no se apaga un anuncio por esto</td></tr>
+<tr><td>Conversión</td><td>De cada 100 visitas a la página, cuántas compran</td><td class="n">más de 2 % (meta 3 a 6 %)</td><td>la página o la oferta</td></tr>
+<tr><td>Frecuencia</td><td>Cuántas veces vio el anuncio la misma persona</td><td class="n">menos de 7 (ideal 1 a 3)</td><td>el público está cansado</td></tr>
+</table></div>
+
+<h3>El número de negocio: cuánto cuesta cada venta contra lo que deja</h3>
+<div class="card">
+  <p>Se calcula como <b>costo por venta ÷ lo que cobramos por venta</b>.</p>
+  <ul>
+    <li><b>Más de 100 %:</b> el anuncio cuesta más prendido que apagado.</li>
+    <li><b>Menos de 50 %:</b> hay margen para meterle más plata.</li>
+  </ul>
+  <p class="why">Hoy estamos en ~USD 29 por venta contra ~USD 13 que deja cada una, o sea 218 %. Es normal en la etapa de testeo: el trabajo es encontrar los anuncios que vendan barato y apagar el resto rápido. La escuela lo dice así: "este juego es de ganar dinero, no de vender mucho".</p>
+</div>
+<div class="kpis">
+  <div class="kpi"><b>~USD 0,44</b><span>nos cuesta cada visita a la página</span></div>
+  <div class="kpi"><b>~3,4 %</b><span>conversión que necesitamos para no perder</span></div>
+  <div class="kpi"><b>1,5 %</b><span>conversión que tenemos hoy</span></div>
+  <div class="kpi"><b>2,6 %</b><span>alcanzaría si todas sumaran el extra del carrito</span></div>
+</div>
+<p class="why">Por eso los dos caminos para ganar plata son una página que convierta más y un ticket más alto (extras del carrito y la oferta después de comprar), no gastar más en anuncios.</p>
+
+<h2>2. El diagnóstico: el embudo se revisa en orden</h2>
+<p>Se mira paso por paso y se arregla <b>el primero que falla</b>. Si el anuncio está bien y la venta no llega, no se toca el anuncio.</p>
+<div class="card">
+  <div class="rule"><div class="num">1</div><div><b>El anuncio:</b> ¿frena el scroll y se mira? (gancho y retención)</div></div>
+  <div class="rule"><div class="num">2</div><div><b>El clic:</b> ¿los que tocan llegan a la página? (calidad de clics)</div></div>
+  <div class="rule"><div class="num">3</div><div><b>El costo de mostrarlo:</b> ¿el CPM es normal?</div></div>
+  <div class="rule"><div class="num">4</div><div><b>La página:</b> ¿convierte 2 % o más? Si da 1,5 a 1,8 %, no se rehace todo: se miran las grabaciones de Clarity para ver dónde se van y se hace un ajuste por vez.</div></div>
+  <div class="rule"><div class="num">5</div><div><b>El pago:</b> ¿los que van a pagar terminan comprando?</div></div>
+</div>
+<p class="why">Así lo aplicamos el 18-11: los pasos 1, 2, 3 y 5 dieron bien; falla el 4, en la primera pantalla de la página, y falla igual en los 10 anuncios. Por eso el próximo cambio va en la página y no en los anuncios.</p>
+
+<h2>3. Cómo se mide sin engañarse</h2>
+<ul class="check">
+  <li><b>Las ventas se cuentan en la tienda</b> (Impultienda y Utmify), nunca en Meta. Meta llega tarde y se equivoca de anuncio: ya le adjudicó ventas al anuncio equivocado y dejó otras sin adjudicar.</li>
+  <li><b>Sin nuestras propias visitas.</b> El 17-11 creímos que mucha gente iba a pagar, pero eran nuestras pruebas. Ahora se mide filtrando nuestras sesiones.</li>
+  <li><b>48 horas por cada cambio.</b> Si se cambian cinco cosas en un día, no se sabe cuál funcionó. Entre el 12 y el 17-11 cambiamos la página más de 20 veces y no podemos atribuirle nada a ningún cambio. Lección aprendida.</li>
+  <li><b>Un cambio a la vez</b> en la página, y se mide contra la versión anterior.</li>
+  <li><b>Siempre el período completo</b> desde que arrancó la tanda, nunca solo "hoy".</li>
+  <li><b>Muestra chica = no hay conclusión.</b> Los extras del carrito y la oferta después de comprar no se juzgan hasta tener 10 compradoras.</li>
+  <li><b>Antes de mandar gente, se prueba todo de punta a punta</b> como si fuéramos una compradora nueva: anuncio, página, pago y entrega del PDF.</li>
+</ul>
+
+<h2>4. Las reglas del testeo de anuncios</h2>
+<div class="card">
+  <div class="rule"><div class="num">1</div><div><b>Corte automático, sin preguntar.</b>
+    <ul>
+      <li>USD 10 sin venta: se apaga en el momento, a cualquier hora.</li>
+      <li>Con 1 venta: sigue hasta USD 13, y si no hace la segunda, se apaga.</li>
+      <li>Con 2 ventas o más: se queda.</li>
+    </ul>
+    Antes de esos montos no se analiza nada. Un robot lo revisa cada 20 minutos.</div></div>
+  <div class="rule"><div class="num">2</div><div><b>Estructura fija:</b> cada anuncio en su propio conjunto con USD 5 por día, siempre dentro de la misma campaña, solo en Facebook e Instagram, con el público automático de Meta (Advantage+) prendido.</div></div>
+  <div class="rule"><div class="num">3</div><div><b>Tandas de 5 cada 2 o 3 días.</b> Mientras no haya un ganador, la mayoría son ángulos nuevos (en la T3: 4 nuevos y 1 variación).</div></div>
+  <div class="rule"><div class="num">4</div><div><b>Regla de 3 para ángulos nuevos:</b> se usa un ángulo solo si 3 marcas distintas o más lo vienen usando hace 14 días o más, con muchos anuncios prendidos. Si alguien lo sostiene tanto tiempo, es porque le vende.</div></div>
+  <div class="rule"><div class="num">5</div><div><b>Variaciones que de verdad sean distintas.</b> Meta trata a dos anuncios parecidos como uno solo y muestra uno por subasta. Cambiarle solo el texto a un video no cuenta como anuncio nuevo: tiene que cambiar lo que se ve.</div></div>
+  <div class="rule"><div class="num">6</div><div><b>Al prender una tanda nueva, se apaga lo viejo que compite</b> con ella (mismo ángulo).</div></div>
+  <div class="rule"><div class="num">7</div><div><b>Prender, presupuestos y pagos los decide Matías.</b> El resto (cortes, armado, carga en pausa) corre solo.</div></div>
+</div>
+
+<h2>5. Buenas prácticas de creativos</h2>
+<ul class="check">
+  <li><b>El ángulo se copia, la edición se mejora.</b> Lo que dice el anuncio se modela de lo que ya vende hace meses; cómo se ve lo hacemos mejor.</li>
+  <li><b>Cada pieza va al lado de la referencia que copia</b>, con los días y los anuncios que tiene esa referencia. Si no hay referencia, no hay pieza.</li>
+  <li><b>Todo entra por los ojos y por los oídos.</b> En cada video:
+    <ul>
+      <li>sonidos en las palabras clave;</li>
+      <li>subtítulos tipo karaoke;</li>
+      <li>la tapa del método se mueve cuando se nombra;</li>
+      <li>el regalo aparece como una caja que se abre;</li>
+      <li>el cierre es distinto en cada video;</li>
+      <li>sin título fijo arriba.</li>
+    </ul>
+  </li>
+  <li><b>Ritmo:</b> un clip real por frase, cortes de 1 a 3 segundos, nada de tomas largas.</li>
+  <li><b>Coherencia:</b> anuncio, página y pago dicen lo mismo, con la misma promesa y el mismo precio, para que la compradora no se pierda en el camino.</li>
+  <li><b>Zona segura de Meta:</b> lo importante va lejos de los bordes, para que los botones de Instagram no lo tapen.</li>
+  <li><b>Primero el estilo, después la tanda:</b> se muestra una muestra y Matías da el OK antes de producir todo.</li>
+  <li><b>Una promesa que vende hace meses no se suaviza</b> por miedo a las normas: si la referencia la sostiene 277 días, la usamos.</li>
+  <li><b>Clips de terceros con permiso:</b> se registra de quién es cada clip y se le escribe.</li>
+</ul>
+
+<h2>6. Página de venta y oferta</h2>
+<ul class="check">
+  <li><b>Primero vista previa, después publicar.</b> Ningún cambio sale sin que Matías diga "publicá".</li>
+  <li><b>La primera pantalla decide:</b> 5 a 8 de cada 10 se van ahí. Las que compran ven el precio arriba y van directo. Las referencias que más venden arrancan con el título, no con una foto.</li>
+  <li><b>Precio tachado = suma de lo que incluye</b> (método más regalo), igual en la página y en el pago.</li>
+  <li><b>Bonus que resuelvan una traba real</b> de la compradora, no relleno: se descartaron dos que ya estaban dentro del producto.</li>
+  <li><b>Pago sin fricción:</b> tarjeta primero, solo mail y nombre, aviso de "volver al sitio" y mail a los 5 minutos con la oferta extra.</li>
+</ul>
+
+<h2>7. Cómo decidimos</h2>
+<div class="card">
+  <div class="rule"><div class="num">1</div><div><b>Orden de las fuentes:</b> herramientas del kit → escuela (Skool) → videos de Lucas y Juanpi → consejo externo → ideas propias. Las ideas propias se dicen como "idea sin base" y se miden, no se vuelven regla.</div></div>
+  <div class="rule"><div class="num">2</div><div><b>Toda propuesta dice</b> por qué, cómo, para qué y en qué se basa, y queda anotada en un registro con lo que se decidió y lo que pasó después.</div></div>
+  <div class="rule"><div class="num">3</div><div><b>"El éxito ama la velocidad" y "el éxito premia la acción".</b> Las tandas se terminan en el día; lo que no es prioridad va a una lista y no frena la salida.</div></div>
+  <div class="rule"><div class="num">4</div><div><b>Validar antes de invertir.</b> Primero se prueba que la oferta vende; recién después se gasta en mejorarla o escalarla.</div></div>
+  <div class="rule"><div class="num">5</div><div><b>Metas en números y con fecha</b>, revisadas cada domingo. La próxima: 22-11, un anuncio con 2 ventas o más a menos de USD 10 cada una.</div></div>
+  <div class="rule"><div class="num">6</div><div><b>Un producto a la vez.</b> El foco está 100 % en el Método Tranquilito: primero Argentina, después otros países.</div></div>
+</div>
+
+<h2>8. Errores que nos dejaron una regla</h2>
+<div class="tablewrap"><table>
+<tr><th>Qué pasó</th><th>Qué aprendimos</th></tr>
+<tr><td>Juzgamos un gancho de 27 % como malo usando una vara más exigente que la de testeo</td><td>Una sola vara escrita (punto 1)</td></tr>
+<tr><td>Dejamos anuncios prendidos pasados de USD 10 esperando 48 horas que no pedía ninguna regla</td><td>El corte lo dispara el gasto, no el reloj</td></tr>
+<tr><td>Tres cortes del Test 2 salieron con USD 1 a 2 de más porque nadie los estaba revisando</td><td>El robot de corte se arma en el mismo momento en que se prende la tanda</td></tr>
+<tr><td>Propusimos ángulos sacados de 1 o 2 marcas</td><td>Regla de 3, con la búsqueda que lo respalda</td></tr>
+<tr><td>Más de 20 cambios a la página en 5 días</td><td>48 horas y un solo cambio por vez</td></tr>
+<tr><td>Contamos nuestras propias visitas como si fueran de compradoras</td><td>Se mide sin nuestras sesiones</td></tr>
+<tr><td>La T2 se cargó con ubicaciones automáticas (Audience Network, Messenger)</td><td>Solo Facebook e Instagram, siempre</td></tr>
+<tr><td>Meta no le adjudicó a ningún anuncio la venta del 17-11</td><td>Las ventas se leen en la tienda</td></tr>
+</table></div>
+
+<footer>Bases: clase "Métricas sugeridas" y cursos de Meta Ads de la escuela (Skool), videos de Lucas y Juanpi, herramientas del kit y documentación de Meta sobre creativos parecidos. Números del Test 1 y el Test 2 al 18-11.</footer>
+</div>
+</body>
+</html>
