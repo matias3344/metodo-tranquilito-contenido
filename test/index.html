@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="es"><head>
+<title>Test del sueño Tranquilito</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Test gratis de 3 minutos: descubrí por qué tu bebé se sigue despertando de noche y por dónde empezar. Método Tranquilito, para bebés de 4 a 24 meses.">
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1159000216652713');fbq('track','PageView');</script>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","zcv1bwbp47");</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+<style>
+/* Layout: una columna de celular, una pregunta por pantalla, respuesta comentada antes de seguir (molde Soy Esa Mamá). Marca de la landing, tema claro fijo. */
+:root{
+  --petroleo:#00372e; --menta:#70e5dd; --menta-suave:#e6faf7; --turquesa:#009688;
+  --coral:#ff735c; --coral-suave:#fff4f2; --magenta:#c81c86;
+  --fondo:#f7fbfa; --tinta:#16302b; --tinta-2:#4c6762; --borde:#d5e6e2; --blanco:#ffffff;
+  --ref:#7a4b00; --ref-fondo:#fff6e0;
+  --fuente:"Montserrat",Arial,"Helvetica Neue",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--fondo);color:var(--tinta);font-family:var(--fuente);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.vp{background:var(--petroleo);color:var(--menta);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:8px 12px}
+.wrap{max-width:520px;margin:0 auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px 8px}
+.marca{font-weight:800;color:var(--petroleo);font-size:15px}
+.marca span{color:var(--turquesa)}
+.paso{font-size:13px;color:var(--tinta-2);font-variant-numeric:tabular-nums}
+.barra{height:6px;background:var(--borde);border-radius:99px;overflow:hidden;margin-bottom:24px}
+.barra i{display:block;height:100%;width:0;background:var(--turquesa);transition:width .3s}
+h1,h2{color:var(--petroleo);text-wrap:balance;margin:0}
+h1{font-size:27px;line-height:1.2;font-weight:800}
+h2{font-size:21px;line-height:1.3;font-weight:800}
+p{margin:0}
+.sub{color:var(--tinta-2);margin-top:8px}
+.pantalla{display:flex;flex-direction:column;gap:16px}
+.ops{display:flex;flex-direction:column;gap:9px}
+.ops.grilla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.op{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;font-weight:600;color:var(--tinta);
+  background:var(--blanco);border:2px solid var(--borde);border-radius:14px;padding:13px 15px;cursor:pointer}
+.op:hover{border-color:var(--menta)}
+.op:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+.op[aria-pressed="true"]{border-color:var(--turquesa);background:var(--menta-suave)}
+.op .chk{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--borde);background:var(--blanco)}
+.op[aria-pressed="true"] .chk{background:var(--turquesa);border-color:var(--turquesa)}
+.btn{display:block;width:100%;font:inherit;font-weight:800;font-size:17px;text-align:center;text-decoration:none;
+  color:var(--blanco);background:var(--coral);border:0;border-radius:14px;padding:16px;cursor:pointer}
+.btn[disabled]{opacity:.45;cursor:default}
+.volver{background:none;border:0;font:inherit;font-size:14px;color:var(--tinta-2);cursor:pointer;padding:4px 0;align-self:flex-start;text-decoration:underline}
+input[type=text],input[type=email],select{width:100%;font:inherit;font-size:17px;padding:13px 14px;border:2px solid var(--borde);border-radius:14px;background:var(--blanco);color:var(--tinta)}
+.fecha{display:grid;grid-template-columns:1fr 1.4fr 1.2fr;gap:8px}
+.error{color:#b42318;font-size:14px;font-weight:600}
+.msg{background:var(--menta-suave);border-radius:16px;padding:18px;color:var(--petroleo);white-space:pre-line}
+.msg b{display:block;font-size:18px;margin-bottom:6px}
+.cargando{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;padding-block:40px}
+.ruedita{width:52px;height:52px;border-radius:50%;border:5px solid var(--borde);border-top-color:var(--turquesa);animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:700;color:var(--petroleo);background:var(--menta-suave);border-radius:99px;padding:6px 12px}
+.hallazgo{background:var(--blanco);border:1px solid var(--borde);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.hallazgo .et{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--turquesa)}
+.hallazgo.prin{border:2px solid var(--coral)}
+.hallazgo.prin .et{color:var(--coral)}
+.hallazgo h3{margin:0;font-size:18px;color:var(--petroleo)}
+.escalera{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.esc{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--tinta-2);padding:8px 10px;border-radius:10px}
+.esc b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:var(--borde);color:var(--petroleo)}
+.esc.aca{background:var(--coral-suave);color:var(--tinta);font-weight:600}
+.esc.aca b{background:var(--coral);color:var(--blanco)}
+.oferta{background:var(--petroleo);color:var(--blanco);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.oferta h2{color:var(--blanco)}
+.oferta ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.precio{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.precio s{color:var(--menta);opacity:.85}
+.precio strong{font-size:30px;font-weight:800;color:var(--blanco);font-variant-numeric:tabular-nums}
+.sello{font-size:14px;color:var(--menta)}
+.ref{font-size:12px;color:var(--ref);background:var(--ref-fondo);border-radius:8px;padding:6px 10px}
+.ref b{font-weight:800}
+.dueno{margin-top:28px;border-top:1px dashed var(--borde);padding-top:16px;font-size:13px;color:var(--tinta-2)}
+.dueno summary{cursor:pointer;font-weight:700}
+.dueno pre{white-space:pre-wrap;word-break:break-word;background:var(--blanco);border:1px solid var(--borde);border-radius:10px;padding:12px;font-size:12px}
+@media (prefers-reduced-motion:reduce){.barra i{transition:none}.ruedita{animation:none}}
+</style>
+</head><body>
+
+<div class="wrap">
+  <header><div class="marca">Método <span>Tranquilito</span></div><div class="paso" id="paso"></div></header>
+  <div class="barra"><i id="barra"></i></div>
+  <main id="app"></main>
+</div>
+
+<script>
+const FORM = "https://5d94fe3b.sibforms.com/serve/MUIFAF8rAhYlVJWjKLllw7TGGdEEBmCE457LBx40fxT6xdKbwR2yLDTSajAfmduGqRrym4EoyMoBVPKhIXZGmYlxZIJ1l4sIVgzTGrlDHXk0kfqHMTnRhKrfOOUgGXUSu-sUqnHQ1hAfxceZE5oAn6UumL58ckMxrgwsvufCD-a43OGIRBHdeu7r9zsPLF1SfY3HVEGuakIj5RsTdQ==";
+const ev = (n,p) => { try { window.fbq && fbq("trackCustom", n, p||{}); } catch(e){} };
+const tag = (k,v) => { try { window.clarity && clarity("set", k, String(v)); } catch(e){} };
+const LANDING = "https://metodotranquilito.online/?utm_source=quiz&utm_medium=organico&utm_campaign=test-sueno";
+const R = {};
+const B = () => R.bebe || "tu bebé";
+const sub = s => s.replace(/\{b\}/g, B()).replace(/\{m\}/g, R.mama || "");
+
+// Edad: grupos iguales a los de la referencia (4-6, 7-8, 9-12, 13-17, 18-24 meses)
+const GRUPOS = [
+  {id:"4a6", min:4, max:6, msg:"{b} está en una etapa de muchos cambios:\n\n• Alrededor de los 4 meses su sueño cambia de forma: los ciclos se vuelven más parecidos a los de un adulto y aparecen más despertares.\n• Cerca de los 6 meses suele venir un pico de crecimiento que también mueve las noches.\n\nEs normal que todo se sienta más difícil. Al terminar el test vas a saber por dónde empezar."},
+  {id:"7a8", min:7, max:8, msg:"{b} está en una etapa de muchos cambios:\n\n• Entre los 7 y 9 meses empieza a darse cuenta cuando te alejás, y eso hace que te busque más de noche.\n• Seguramente ya gatea o practica ponerse en cuatro patas, y practicar de noche también lo despierta.\n\nEs normal que todo se sienta más difícil. Al terminar el test vas a saber por dónde empezar."},
+  {id:"9a12", min:9, max:12, msg:"{b} está en una etapa de muchos cambios:\n\n• Cerca del año es común que aparezcan despertares nuevos, a veces a las 5 de la mañana.\n• Seguramente se para o da sus primeros pasos, y eso también se nota en las noches.\n\nEs normal que todo se sienta más difícil. Al terminar el test vas a saber por dónde empezar."},
+  {id:"13a17", min:13, max:17, msg:"{b} está en una etapa de muchos cambios:\n\n• Seguramente ya camina, y cada logro nuevo puede mover sus noches.\n• Entre los 16 y 20 meses suelen llegar las primeras palabras: otro salto grande que también se nota en el sueño.\n\nEs normal que todo se sienta más difícil. Al terminar el test vas a saber por dónde empezar."},
+  {id:"18a24", min:18, max:24, msg:"{b} está en una etapa de muchos cambios:\n\n• Entre los 18 y 20 meses es común que las noches estén inestables.\n• Cerca de los 2 años puede volver a costar la hora de dormir y aparecer despertares nuevos.\n\nEs normal que todo se sienta más difícil. Al terminar el test vas a saber por dónde empezar."},
+];
+// Rango de horas despierto antes de la noche: tabla de la Clase 1 del Método Tranquilito
+const VENTANA = {"4a6":[1.5,2.5], "7a8":[2,3], "9a12":[2.5,3.5], "13a17":[3,5], "18a24":[5,6]};
+const SIESTAS_OK = {"4a6":[3,4], "7a8":[2,3], "9a12":[2,2], "13a17":[1,2], "18a24":[1,1]};
+
+const PREGUNTAS = [
+  {id:"despierta", ref:"¿A qué hora se despierta por la mañana?", t:"¿A qué hora se despierta {b} a la mañana?", grilla:true, ops:[
+    [4.5,"Antes de las 5"],[5.5,"Entre 5 y 6"],[6.25,"Entre 6 y 6:30"],[6.75,"Entre 6:30 y 7"],[7.25,"Entre 7 y 7:30"],[7.75,"Entre 7:30 y 8"],[8.5,"Entre 8 y 9"],[9.5,"9 o más tarde"]],
+    fb:v => v < 6 ? "Arrancar el día tan temprano casi siempre sale de cómo está armado el día anterior. En el resultado te mostramos qué mirar." : null},
+  {id:"duerme", ref:"¿A qué hora se duerme en la noche?", t:"¿A qué hora se duerme {b} a la noche?", grilla:true, ops:[
+    [18.25,"Entre 18 y 18:30"],[18.75,"Entre 18:30 y 19"],[19.25,"Entre 19 y 19:30"],[19.75,"Entre 19:30 y 20"],[20.25,"Entre 20 y 20:30"],[20.75,"Entre 20:30 y 21"],[21.5,"Entre 21 y 22"],[22.5,"22 o más tarde"]]},
+  {id:"siestas", ref:"¿Cuántas siestas hace al día?", t:"¿Cuántas siestas hace {b} por día?", grilla:true, ops:[[0,"Ninguna"],[1,"1"],[2,"2"],[3,"3"],[4,"4 o más"]]},
+  {id:"ventana", ref:"Desde que termina su última siesta, ¿cuánto pasa hasta que se duerme?", t:"Desde que termina la última siesta, ¿cuánto pasa hasta que {b} se duerme a la noche?", grilla:true, ops:[
+    [1.5,"Menos de 2 h"],[2,"2 h"],[2.5,"2 h y media"],[3,"3 h"],[3.5,"3 h y media"],[4,"4 h"],[4.5,"4 h y media"],[5,"5 h"],[5.5,"5 h y media"],[6.5,"6 h o más"]]},
+  {id:"comoNoche", ref:"En la primera dormida de la noche, ¿cómo se duerme?", t:"En la primera dormida de la noche, ¿cómo se duerme {b}?", ops:[
+    ["teta","Tomando la teta"],["mamadera","Con la mamadera"],["brazos","A upa o hamacándolo"],["caricias","Con caricias, en la cuna"],["colecho","Acostado con nosotros"],["solo","Solo, sin ayuda"]],
+    fb:v => v === "solo" ? "¡Muy bien! Dormirse solo es lo más difícil, y {b} ya lo hace." : "Guardá esta respuesta: es la pista más importante del test. En el resultado te explicamos por qué."},
+  {id:"comoMadrugada", ref:"En los despertares de la madrugada, ¿cómo se vuelve a dormir?", t:"Cuando se despierta de madrugada, ¿cómo se vuelve a dormir {b}?", ops:[
+    ["teta","Con la teta o la mamadera"],["brazos","A upa"],["caricias","Con caricias"],["acompanado","Acostándome al lado"],["cama","Se pasa a nuestra cama"],["solo","Se vuelve a dormir solo"]]},
+  {id:"despertares", ref:"¿Cuántas veces se despierta en la noche, en promedio?", t:"En una noche común, ¿cuántas veces se despierta {b}?", ops:[
+    [0,"Ninguna: duerme toda la noche"],[1,"1 vez"],[2.5,"2 o 3 veces"],[4.5,"4 o 5 veces"],[6,"6 veces o más"]],
+    fb:v => v === 0 ? "¡Qué bueno que en casa puedan descansar! Igual seguí: el test te muestra qué cuidar para que siga así." : v >= 4 ? "Despertarte tantas veces, noche tras noche, cansa de verdad. No estás exagerando." : null},
+  {id:"comoDespierta", ref:"En los despertares de la madrugada, ¿cómo se despierta?", t:"Cuando se despierta de madrugada, ¿cómo lo hace?", ops:[
+    ["llanto","Llorando fuerte"],["queja","Quejándose o con llanto suave"],["silencio","En silencio: solo te das cuenta si lo mirás"]],
+    fb:v => v === "queja" || v === "silencio" ? "Un dato útil: si se despierta quejándose o en silencio, esperá un ratito antes de entrar. Muchas veces se vuelve a dormir solo." : "Es muy difícil escucharlo llorar de noche. El llanto es su forma de decirte algo, y en el método nunca lo dejás solo."},
+  {id:"donde", ref:"¿Dónde duerme por la noche?", t:"¿Dónde duerme {b} a la noche?", ops:[
+    ["cuna-su-cuarto","En su cuna, en su cuarto"],["cuna-nuestro","En su cuna, en nuestro cuarto"],["colecho","En nuestra cama"],["cuna-colecho","En una cuna pegada a nuestra cama"],["cama","En su cama, en su cuarto"]],
+    fb:v => v === "colecho" ? "El método funciona también si duermen juntos. No tenés que elegir entre el colecho y descansar." : null},
+  {id:"rutina", ref:"¿Cómo es la rutina antes de dormir?", t:"¿Cómo llega {b} a la rutina de la noche?", ops:[
+    ["tranquilo","Tranquilo"],["energia","Con muchísima energía"],["llanto","Llorando o muy molesto"],["varia","Cambia mucho de un día al otro"]],
+    fb:v => v === "energia" || v === "llanto" ? "Cómo llega a la rutina dice mucho del cansancio con el que termina el día. Lo miramos en el resultado." : null},
+  {id:"siestaDespierta", ref:"¿Cómo se despierta de la siesta?", t:"¿Cómo se despierta {b} de la siesta?", ops:[
+    ["feliz","Contento: me llama o sonríe"],["llorando","Llorando"],["varia","Depende del día"]],
+    fb:v => v === "llorando" ? "Cuando se despierta llorando de la siesta, muchas veces es porque necesitaba dormir un poco más." : null},
+  {id:"mama", tipo:"nombre-mama", ref:"Antes de seguir, ¿cómo te llamas tú?", t:"Antes de seguir, ¿cómo te llamás vos?"},
+  {id:"noches", ref:"¿Cómo describirías tus noches últimamente?", t:"{m}, ¿cómo describirías tus noches últimamente?", ops:[
+    ["limite","Al límite: no sé cuánto más aguanto"],["agotada","Agotada, pero sigo funcionando"],["altibajos","Con altibajos: unos días mejor que otros"],["bien","Bastante bien"]],
+    fb:v => v === "limite" ? "Gracias por decirlo. Lo que sentís tiene sentido, y tiene arreglo." : v === "agotada" ? "Funcionar sin dormir no es lo mismo que estar bien. Vos también merecés descansar." : null},
+  {id:"frustra", ref:"¿Qué es lo que más te frustra de las noches?", t:"¿Qué es lo que más te frustra de las noches con {b}?", ops:[
+    ["tiempo","No tengo tiempo para mí"],["solo-yo","Que solo se duerma conmigo"],["pareja","Que nos está afectando como pareja"],["energia","Que no me queda energía para nada"],["consejos","Que todos me dicen algo distinto"]]},
+  {id:"probo", multi:true, ref:"¿Has intentado algo para que duerma mejor?", t:"¿Probaste algo para que {b} duerma mejor?", sub:"Podés marcar varias.", ops:[
+    ["llorar","Dejarlo llorar un rato"],["ventanas","Ventanas de sueño o una rutina"],["redes","Consejos de redes o apps"],["pediatra","Consulté con el pediatra"],["asesora","Una asesora de sueño"],["nada","Nada todavía"]]},
+];
+
+const app = document.getElementById("app");
+let i = 0, fase = "portada";
+const TOTAL = PREGUNTAS.length + 2;
+
+function avance(){
+  const n = fase === "portada" ? 0 : fase === "bebe" ? 1 : fase === "fecha" || fase === "edad" ? 2 : fase === "q" || fase === "fb" ? i + 3 : TOTAL;
+  document.getElementById("barra").style.width = Math.min(100, n / TOTAL * 100) + "%";
+  document.getElementById("paso").textContent = fase === "portada" ? "" : fase === "resultado" ? "Tu resultado" : `${Math.min(n,TOTAL)} de ${TOTAL}`;
+}
+const ref = t => "";
+
+function portada(){
+  fase = "portada"; avance();
+  app.innerHTML = `<section class="pantalla">
+    <h1>Descubrí por qué tu bebé se sigue despertando de noche</h1>
+    <p class="sub">Contestá unas preguntas sobre tu bebé y te decimos qué lo está despertando y por dónde empezar. Es gratis y tarda 3 minutos.</p>
+    <div class="chips"><span class="chip">Para bebés de 4 a 24 meses</span><span class="chip">Sin dejarlo llorar solo</span></div>
+    <button class="btn" id="ir">Empezar el test</button>
+    ${ref("anuncio «Descubre por qué tu bebé se sigue despertando con este quiz gratis» → quiz.soyesamama.com")}
+  </section>`;
+  go("ir", () => { ev("TestInicio"); tag("test","inicio"); pedirBebe(); });
+}
+function go(id, fn){ const el = document.getElementById(id); if (el) el.onclick = fn; }
+
+function pedirBebe(){
+  fase = "bebe"; avance();
+  app.innerHTML = `<section class="pantalla"><h2>¿Cómo se llama tu bebé?</h2>
+    <input type="text" id="bebe" maxlength="24" autocomplete="off" placeholder="Por ejemplo, Benja" value="${R.bebe || ""}">
+    <p class="error" id="err" hidden>Escribí el nombre de tu bebé para seguir.</p>
+    <button class="btn" id="seguir">Seguir</button><button class="volver" id="atras">Volver</button>
+    ${ref("nombre del bebé")}</section>`;
+  const inp = document.getElementById("bebe"); inp.focus();
+  const ok = () => { const v = inp.value.trim().replace(/[<>&"]/g,"").slice(0,24); if (!v){ document.getElementById("err").hidden = false; return; }
+    R.bebe = v.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" "); pedirFecha(); };
+  go("seguir", ok); inp.onkeydown = e => { if (e.key === "Enter") ok(); }; go("atras", portada);
+}
+
+function pedirFecha(){
+  fase = "fecha"; avance();
+  const hoy = new Date(); const anios = [0,1,2,3].map(k => hoy.getFullYear() - k);
+  const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  app.innerHTML = `<section class="pantalla"><div><h2>¿Cuándo nació ${B()}?</h2><p class="sub">Así calculamos su edad exacta y te damos el resultado para su etapa.</p></div>
+    <div class="fecha">
+      <select id="dia" aria-label="Día"><option value="">Día</option>${Array.from({length:31},(_,k)=>`<option>${k+1}</option>`).join("")}</select>
+      <select id="mes" aria-label="Mes"><option value="">Mes</option>${meses.map((m,k)=>`<option value="${k}">${m}</option>`).join("")}</select>
+      <select id="anio" aria-label="Año"><option value="">Año</option>${anios.map(a=>`<option>${a}</option>`).join("")}</select>
+    </div>
+    <p class="error" id="err" hidden></p>
+    <button class="btn" id="seguir">Seguir</button><button class="volver" id="atras">Volver</button>
+    ${ref("fecha de nacimiento → abre la versión de su edad (4 a 24 meses = Programa Avanzado de Sueño)")}</section>`;
+  go("atras", pedirBebe);
+  go("seguir", () => {
+    const d = +document.getElementById("dia").value, m = document.getElementById("mes").value, a = +document.getElementById("anio").value, err = document.getElementById("err");
+    if (!d || m === "" || !a){ err.textContent = "Elegí día, mes y año."; err.hidden = false; return; }
+    const f = new Date(a, +m, d);
+    if (f.getDate() !== d){ err.textContent = "Esa fecha no existe: revisá el día y el mes."; err.hidden = false; return; }
+    if (f > hoy){ err.textContent = "Esa fecha todavía no llegó: revisá el año."; err.hidden = false; return; }
+    let meses_ = (hoy.getFullYear() - a) * 12 + (hoy.getMonth() - m); if (hoy.getDate() < d) meses_--;
+    R.meses = meses_;
+    R.grupo = (GRUPOS.find(g => meses_ >= g.min && meses_ <= g.max) || {}).id || (meses_ < 4 ? "menos4" : "mas24");
+    if (R.grupo === "menos4" || R.grupo === "mas24") return fueraDeEdad();
+    mensajeEdad();
+  });
+}
+
+function mensajeEdad(){
+  fase = "edad"; avance();
+  const g = GRUPOS.find(x => x.id === R.grupo);
+  app.innerHTML = `<section class="pantalla"><div class="msg"><b>${B()} tiene ${R.meses} meses</b>${sub(g.msg)}</div>
+    <button class="btn" id="seguir">Seguir</button><button class="volver" id="atras">Volver</button>
+    ${ref("mensaje según la edad (regresión de los 4, 8, 12 o 18 meses)")}</section>`;
+  go("seguir", () => { i = 0; pregunta(); }); go("atras", pedirFecha);
+}
+
+function fueraDeEdad(){
+  fase = "resultado"; avance();
+  const chico = R.grupo === "menos4";
+  app.innerHTML = `<section class="pantalla"><h2>${chico ? `${B()} todavía es muy chiquito para este plan` : "Este plan es para bebés más chicos"}</h2>
+    <p class="sub">${chico ? "Antes de los 4 meses es normal que se despierte seguido para comer. El Método Tranquilito arranca a los 4 meses: volvé a hacer el test entonces." : "El Método Tranquilito es para bebés de 4 a 24 meses. Después de los 2 años el sueño cambia y necesita otro enfoque."}</p>
+    <button class="volver" id="rehacer">Hacer el test de nuevo</button>
+    ${ref("la referencia manda a otra versión del quiz (0-3 meses o 2-6 años); nosotros no tenemos producto para esas edades")}</section>`;
+  go("rehacer", reiniciar);
+}
+
+function pregunta(){
+  if (i >= PREGUNTAS.length) return cargando();
+  fase = "q"; avance();
+  const q = PREGUNTAS[i];
+  if (q.tipo === "nombre-mama"){
+    app.innerHTML = `<section class="pantalla"><h2>${sub(q.t)}</h2>
+      <input type="text" id="mama" maxlength="24" autocomplete="off" placeholder="Tu nombre" value="${R.mama || ""}">
+      <button class="btn" id="seguir">Seguir</button><button class="volver" id="atras">Volver</button>${ref(q.ref)}</section>`;
+    const inp = document.getElementById("mama"); inp.focus();
+    const ok = () => { const v = inp.value.trim().replace(/[<>&"]/g,"").slice(0,24); if (!v) return; R.mama = v.charAt(0).toUpperCase() + v.slice(1); i++; pregunta(); };
+    go("seguir", ok); inp.onkeydown = e => { if (e.key === "Enter") ok(); }; go("atras", atras);
+    return;
+  }
+  const sel = q.multi ? new Set(R[q.id] || []) : null;
+  app.innerHTML = `<section class="pantalla"><div><h2>${sub(q.t)}</h2>${q.sub ? `<p class="sub">${q.sub}</p>` : ""}</div>
+    <div class="ops ${q.grilla ? "grilla" : ""}">${q.ops.map(([v,l],k) => `<button class="op" data-k="${k}" aria-pressed="${q.multi ? sel.has(v) : R[q.id] === v}">${q.multi ? '<span class="chk"></span>' : ""}${l}</button>`).join("")}</div>
+    ${q.multi ? `<button class="btn" id="seguir" ${sel.size ? "" : "disabled"}>Seguir</button>` : ""}
+    <button class="volver" id="atras">Volver</button>${ref(q.ref)}</section>`;
+  app.querySelectorAll(".op").forEach(b => b.onclick = () => {
+    const v = q.ops[+b.dataset.k][0];
+    if (!q.multi){ R[q.id] = v; return comentario(q, v); }
+    if (v === "nada"){ sel.clear(); sel.add("nada"); } else { sel.delete("nada"); sel.has(v) ? sel.delete(v) : sel.add(v); }
+    R[q.id] = [...sel];
+    app.querySelectorAll(".op").forEach(x => x.setAttribute("aria-pressed", sel.has(q.ops[+x.dataset.k][0])));
+    document.getElementById("seguir").disabled = !sel.size; avance();
+  });
+  if (q.multi) go("seguir", () => comentario(q, R[q.id]));
+  go("atras", atras);
+}
+
+function comentario(q, v){
+  let t = null;
+  if (q.fb) t = q.fb(v);
+  if (q.id === "probo"){
+    if (v.includes("llorar")) t = "Si lo dejaste porque te partía el alma, no hace falta volver a eso. Se puede bajar la ayuda de a poquito, con vos al lado.";
+    else if (v.includes("pediatra")) t = "Bien que lo consultaste: así se descartan temas de salud. Lo que vemos acá es otra cosa: cómo aprende a dormirse.";
+    else if (v.includes("ventanas") || v.includes("redes")) t = "Las ventanas, las rutinas y los consejos de redes ordenan el día, pero no cambian cómo se duerme. Por eso duran un par de noches.";
+    else if (v.includes("asesora")) t = "Buscar ayuda ya dice mucho de vos. Si funcionó y después volvió todo, suele ser porque cambió de etapa.";
+    else t = "Estás dando el paso más importante para que en casa vuelvan a descansar.";
+  }
+  if (!t){ i++; return pregunta(); }
+  fase = "fb"; avance();
+  app.innerHTML = `<section class="pantalla"><h2>${sub(q.t)}</h2><div class="msg">${sub(t)}</div>
+    <button class="btn" id="seguir">Seguir</button>${ref("después de cada respuesta muestra un comentario corto (ellos usan datos de estudios; acá van frases del método, sin cifras)")}</section>`;
+  go("seguir", () => { i++; pregunta(); });
+}
+
+function atras(){ if (i === 0) return mensajeEdad(); i--; pregunta(); }
+
+function cargando(){
+  fase = "cargando"; avance();
+  app.innerHTML = `<section class="cargando"><div class="ruedita" aria-hidden="true"></div><h2>¡Ya casi tenemos el resultado de ${B()}!</h2></section>`;
+  setTimeout(() => { if (fase === "cargando") pedirMail(); }, 1600);
+}
+
+function pedirMail(){
+  fase = "mail"; avance();
+  app.innerHTML = `<section class="pantalla"><div><h2>¿A qué mail te mandamos el resultado de ${B()}?</h2><p class="sub">Te lo mostramos acá mismo y te queda una copia en tu mail.</p></div>
+    <input type="email" id="mail" autocomplete="email" placeholder="tu@mail.com" value="${R.mail || ""}">
+    <p class="error" id="err" hidden>Escribí un mail válido para seguir.</p>
+    <button class="btn" id="seguir">Ver mi resultado</button>
+    ${ref("pide el mail antes del resultado. En la vista previa no se envía nada; en la versión real va a Brevo")}</section>`;
+  go("seguir", () => { const v = document.getElementById("mail").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ document.getElementById("err").hidden = false; return; }
+    R.mail = v;
+    try { const f = new URLSearchParams({EMAIL: v, email_address_check: "", locale: "es", html_type: "simple"});
+      fetch(FORM, {method: "POST", mode: "no-cors", body: f}); } catch(e){}
+    try { window.fbq && fbq("track", "Lead", {content_name: "test-sueno"}); } catch(e){}
+    resultado(); });
+}
+
+const AYUDA = {teta:"tomando la teta", mamadera:"con la mamadera", brazos:"a upa", caricias:"con tus caricias", colecho:"acostado con ustedes", solo:"solo"};
+const ESCALONES = [
+  "Se duerme tomando la teta o a upa",
+  "Toma la teta, la soltás antes de que se duerma y lo terminás de dormir a upa",
+  "Lo apoyás en la cuna relajado pero despierto, con tu mano en su panza",
+  "En la cuna despierto, lo acompañás con tu voz y cada vez menos contacto",
+  "En la cuna, tu frase de cierre y te quedás sentada cerca",
+];
+
+function resultado(){
+  fase = "resultado"; avance();
+  const b = B(), g = R.grupo;
+  // Familia A (como la referencia): cómo se duerme y cómo vuelve a dormirse
+  const A = [];
+  if (R.comoNoche !== "solo") A.push({h:`Se duerme ${AYUDA[R.comoNoche]} y en cada despertar te lo vuelve a pedir`,
+    t:`Entre un ciclo de sueño y el siguiente, ${b} se despierta un poquito y busca lo mismo que tenía al dormirse. Si se durmió ${AYUDA[R.comoNoche]} y eso ya no está, se despierta del todo y te llama. No es hambre ni capricho: es la única forma que conoce de volver a dormirse. La teta y los brazos no están mal; solo vamos a cambiar que sean lo último antes de dormirse.`});
+  else if (R.comoMadrugada !== "solo") A.push({h:"Se duerme solo, pero de madrugada todavía te necesita",
+    t:`${b} ya sabe dormirse a la noche, que es lo más difícil. Falta que use eso mismo en los despertares de la madrugada.`});
+  // Familia B (como la referencia): horarios, en el orden de importancia de la referencia
+  const Bx = [];
+  const [vmin, vmax] = VENTANA[g];
+  if (R.ventana > vmax + 0.25) Bx.push({h:"Llega a la noche demasiado cansado",
+    t:`Pasan unas ${R.ventana} horas desde la última siesta hasta la noche, y a su edad lo que suele aguantar es entre ${vmin} y ${vmax} horas. Con el cansancio de más parece que no tiene sueño, pero se despierta más seguido.`});
+  const horasDespierto = R.duerme - R.despierta;
+  if (horasDespierto > 13) Bx.push({h:"Se duerme tarde para la hora en que arranca",
+    t:`Entre que se levanta y se duerme a la noche pasan unas ${Math.round(horasDespierto)} horas. Es mucho día para un cuerpo tan chiquito: adelantar la hora de dormir de a poquito ayuda.`});
+  const [smin, smax] = SIESTAS_OK[g];
+  if (R.siestas < smin || R.siestas > smax) Bx.push({h: R.siestas < smin ? "Hace menos siestas de las que suele necesitar a su edad" : "Hace más siestas de las que suele necesitar a su edad",
+    t:`A los ${R.meses} meses lo común son ${smin === smax ? smin : smin + " o " + smax} siesta${smax > 1 ? "s" : ""} por día. ${R.siestas < smin ? "Con menos, llega a la noche agotado." : "Con más, llega a la noche con pilas."}`});
+  if (R.ventana < vmin) Bx.push({h:"Llega a la noche con poco cansancio",
+    t:`La última siesta termina muy cerca de la hora de dormir. Con pilas, tarda en dormirse y se despierta con ganas de jugar o arranca el día muy temprano.`});
+  if (!A.length && !Bx.length) Bx.push({h:"Su día está bien armado", t:`Los horarios de ${b} están dentro de lo esperable para su edad. El método te ayuda a sostenerlo y a resolver los despertares que quedan.`});
+  const esc = {teta:0, mamadera:0, brazos:0, colecho:0, caricias:3, solo:4}[R.comoNoche] ?? 0;
+  ["grupo","comoNoche","comoMadrugada","despertares","donde","noches","frustra"].forEach(k => tag("t_"+k, R[k]));
+  tag("t_escalon", esc+1); tag("t_probo", (R.probo||[]).join("-")); tag("t_dia", Bx.map(x=>x.h).join(" / ").slice(0,90));
+  ev("TestResultado", {grupo: R.grupo, escalon: esc+1, como_se_duerme: R.comoNoche, despertares: R.despertares});
+  const escalera = ESCALONES.map((e,k) => `<div class="esc ${k===esc?"aca":""}"><b>${k+1}</b><span>${e}${k===esc?" · <strong>acá arrancás</strong>":""}</span></div>`).join("");
+  const tarjeta = (x, et, prin) => `<div class="hallazgo ${prin ? "prin" : ""}"><span class="et">${et}</span><h3>${x.h}</h3><p>${x.t}</p></div>`;
+  app.innerHTML = `<section class="pantalla">
+    <div><h1>${R.mama ? R.mama + ", esto" : "Esto"} es lo que despierta a ${b}</h1>
+      <p class="sub">Casi todas las noches difíciles se explican con dos problemas: cómo se duerme y cómo llega a la noche. Esto es lo que vemos en tus respuestas.</p></div>
+    ${A.map((x,k) => tarjeta(x, "Lo principal · cómo se duerme", k===0)).join("")}
+    ${Bx.map(x => tarjeta(x, "Cómo llega a la noche", !A.length)).join("")}
+    <div class="hallazgo"><span class="et">Por dónde empezás</span><h3>Bajar la ayuda de a un escalón, empezando de día</h3>
+      <p>Arrancás en el escalón donde está hoy y subís uno cada uno o dos días, primero en una siesta de la mañana, cuando los dos están descansados. Nunca lo dejás solo llorando.</p>
+      <div class="escalera">${escalera}</div></div>
+    ${ref("resultado = familia A (la «muletilla»: con qué se duerme) + familia B (horarios: ventana larga, se duerme tarde, siestas, ventana corta), en ese orden. Ellos suman un video «generado para vos»: acá no va")}
+    <div class="oferta">
+      <h2>El plan de 10 días para ${b}</h2>
+      <p>El Método Tranquilito te dice qué hacer cada día y cada noche para que ${b} duerma de corrido, sin ventanas de sueño y sin dejarlo llorar solo.</p>
+      <ul><li>3 clases cortas: la rutina, los dos problemas y el llanto</li><li>El plan de 10 días, día por día</li><li>Bonus: «Para vos, mamá»</li></ul>
+      <div class="precio"><s>$74.980</s><strong>$18.990</strong><span>pago único, en pesos</span></div>
+      <a class="btn" href="${LANDING}" onclick="ev('TestIrALanding')">Quiero el plan para ${b}</a>
+      <p class="sello">Si en 10 días ${b} no duerme más de corrido, te devolvemos toda la plata (15 días de garantía).</p>
+    </div>
+    ${ref("ellos venden acá OTRO producto (Programa Avanzado USD 87, tachado USD 1.156, 3 bonus, 7 días). Nosotros mandamos al Método a 18.990, que es lo que hoy vende")}
+    <button class="volver" id="rehacer">Hacer el test de nuevo</button>
+  </section>`;
+  go("rehacer", reiniciar); window.scrollTo(0,0);
+}
+
+function reiniciar(){ for (const k in R) delete R[k]; i = 0; portada(); }
+portada();
+</script>
+</body></html>
