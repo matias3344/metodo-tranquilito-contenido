@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe Método Tranquilito</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f2; --card:#ffffff; --ink:#2a2733; --muted:#6d6878; --line:#e8e2d8;
+  --acc:#5b4b9a; --acc-soft:#ece8f7; --ok:#2f7d55; --ok-soft:#e3f2ea;
+  --warn:#a5661c; --warn-soft:#fbefdc; --bad:#a83a3a; --bad-soft:#f8e3e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+    --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+    --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17151c; --card:#211f28; --ink:#ece9f2; --muted:#a39fb0; --line:#34303f;
+  --acc:#b3a5ef; --acc-soft:#2d2840; --ok:#7fd1a5; --ok-soft:#1d3329;
+  --warn:#e8b26a; --warn-soft:#3a2e1c; --bad:#ef8f8f; --bad-soft:#3d2222;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Montserrat,system-ui,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:32px 16px 80px}
+header .kicker{color:var(--acc);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+.sub{color:var(--muted);margin:0 0 24px}
+h2{font-size:22px;margin:44px 0 12px;padding-top:8px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:12px 0}
+.tldr{background:var(--acc-soft);border-color:transparent}
+.tldr li{margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-size:24px;line-height:1.2}
+.kpi span{color:var(--muted);font-size:13px}
+.tablewrap{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.on{background:var(--ok-soft);color:var(--ok)}
+.off{background:var(--line);color:var(--muted)}
+.win{background:var(--ok-soft);color:var(--ok)}
+.warnt{background:var(--warn-soft);color:var(--warn)}
+.day{border-left:4px solid var(--acc);padding-left:14px;margin:18px 0}
+.day h3{margin-top:0}
+.day ul{padding-left:18px;margin:6px 0}
+.day li{margin:7px 0}
+.why{color:var(--muted);font-size:14px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.ba div{border-radius:10px;padding:10px 12px;font-size:14px}
+.ba .b{background:var(--bad-soft)}
+.ba .a{background:var(--ok-soft)}
+.ba small{display:block;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.06em;opacity:.8}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:0}
+.rule .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--acc);color:var(--card);display:grid;place-items:center;font-weight:800;font-size:13px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin:10px 0}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+ul.check li:before{content:"→";position:absolute;left:4px;color:var(--acc);font-weight:800}
+footer{color:var(--muted);font-size:13px;margin-top:48px}
+@media (max-width:560px){h1{font-size:24px}.ba{grid-template-columns:1fr}}
+</style>
+<style>
+.pieces{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}
+.piece{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;min-width:0}
+.piece video,.piece img{width:100%;border-radius:10px;display:block;background:#000}
+.piece h3{margin:10px 0 4px;font-size:16px}
+.piece .why{margin:4px 0}
+.copy{white-space:pre-line;font-size:13px;background:var(--bg);border-radius:8px;padding:8px 10px;margin-top:8px}
+.strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.strip img{flex:0 0 78%;scroll-snap-align:start;width:78%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Método Tranquilito · Informe para Maca y Karen</div>
+  <h1>Del miércoles 18-11 a la noche al viernes 20-11 a la noche</h1>
+  <p class="sub">Sigue al informe anterior (16-11 → 18-11 18:45). Fecha de corte: viernes 20-11, 22:00 (hora de Argentina).</p>
+</header>
+
+<div class="card tldr">
+  <strong>En 30 segundos</strong>
+  <ul>
+    <li><b>3 ventas más: ya son 7.</b> Las 3 vinieron del Test 3. La última trajo un producto extra del carrito y la recuperó el mail automático de "te olvidaste el carrito".</li>
+    <li><b>Primer anuncio con 2 ventas baratas:</b> el video "¿Solo se duerme a upa?" vendió 2 veces con USD 12,60 (unos USD 6,30 cada venta). Era la meta del domingo 22-11 y llegó 2 días antes. Ese anuncio queda prendido.</li>
+    <li><b>La página de venta pasa la vara:</b> con las ventas del Test 3 compra el 2,6 % de las visitas (la vara es 2 %). Por eso no se toca.</li>
+    <li><b>La oferta tiene 5 regalos:</b> antes había 1. Ahora el precio tachado es $93.940 y se paga $18.990. Se sumó un mail por noche durante los 10 días del plan.</li>
+    <li><b>Test del sueño publicado:</b> un cuestionario gratis que le explica a la mamá por qué se despierta su bebé y la manda a comprar.</li>
+    <li><b>Test 4 prendido hoy a las 21:40:</b> 5 anuncios nuevos. El ángulo principal es "que duerma mejor sin destetarlo", que ya vende afuera.</li>
+    <li><b>El mercado se llenó:</b> hay unas 12 copias en pesos, y una usa directamente nuestro nombre. Respondimos con más regalos y un ángulo propio.</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><b>7</b><span>ventas reales desde el arranque (3 en este período)</span></div>
+  <div class="kpi"><b>~USD 172</b><span>gastado en Meta desde el arranque (Test 3: USD 55,67)</span></div>
+  <div class="kpi"><b>~USD 18,60</b><span>costo por venta del Test 3 (Test 1 + Test 2: ~USD 29)</span></div>
+  <div class="kpi"><b>2,6 %</b><span>de las visitas compra (vara: 2 %; antes 1,5 %)</span></div>
+</div>
+<p class="why">Lectura honesta: todavía cada venta cuesta más de lo que deja. Pero el costo por venta bajó de ~USD 29 a ~USD 18,60 y ya hay un anuncio que vende a USD 6,30. La escuela dice que cuando se vende sin ganancia, lo que hay que hacer es <b>seguir sacando anuncios nuevos</b> hasta encontrar ganadores. Por eso el Test 4 salió tan rápido.</p>
+
+<h2>1. Test 3: cómo viene</h2>
+<p>Las ventas se cuentan en la tienda (Impultienda y Utmify), no en Meta. Gastos tomados de Meta al corte.</p>
+<div class="tablewrap"><table>
+<tr><th>Anuncio</th><th>Gastado</th><th>Ventas reales</th><th>Estado</th></tr>
+<tr><td>Video "¿Solo se duerme a upa?" (versión B)</td><td class="n">USD 12,60</td><td class="n"><b>2</b></td><td><span class="tag win">Sigue prendido</span><div class="why">Con 2 ventas o más se queda. Ventas: jue 19-11 20:22 y vie 20-11 19:40.</div></td></tr>
+<tr><td>Carrusel "¿Otra vez?"</td><td class="n">USD 12,62</td><td class="n"><b>1</b></td><td><span class="tag on">Prendido</span><div class="why">Venta jue 19-11 13:36. Si llega a USD 13 sin la segunda, se apaga.</div></td></tr>
+<tr><td>Imagen "los despertares pasan en 3 pasos"</td><td class="n">USD 10,11</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (vie 17:55)</div></td></tr>
+<tr><td>Video "¿Estás esperando que se le pase solo?"</td><td class="n">USD 10,09</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (vie 15:58)</div></td></tr>
+<tr><td>Video "precio contra la semana agotada"</td><td class="n">USD 10,25</td><td class="n">0</td><td><span class="tag off">Apagado</span><div class="why">USD 10 sin venta (vie 13:59)</div></td></tr>
+<tr><td><b>Total Test 3</b></td><td class="n"><b>USD 55,67</b></td><td class="n"><b>3</b></td><td></td></tr>
+</table></div>
+
+<h3>Qué aprendimos del Test 3</h3>
+<ul>
+  <li><b>Lo que ya vendía, con mejor edición, vendió otra vez.</b> Los 2 anuncios con ventas siguen la línea de lo que vendió antes: "noche a upa" (Test 1) y el meme de los despertares (Test 2).</li>
+  <li><b>Los 3 ángulos nuevos no vendieron</b> (precio, "no es una fase" y la imagen que explica). Que pasen la regla de 3 en la competencia no garantiza que funcionen con nosotras.</li>
+  <li><b>El carrusel es el que más clics saca:</b> 3,3 de cada 100 personas que lo ven tocan (la vara es 1,5).</li>
+  <li><b>Una venta que Meta mostraba no existió:</b> el miércoles a la noche alguien quiso pagar con tarjeta desde "no es una fase" y el pago no entró. Por eso las ventas se cuentan en la tienda y no en Meta.</li>
+</ul>
+
+<h3>Las 3 ventas del período</h3>
+<div class="tablewrap"><table>
+<tr><th>Cuándo</th><th>De qué anuncio</th><th>Cobrado</th><th>Detalle</th></tr>
+<tr><td>Jue 19-11 13:36</td><td>Carrusel "¿Otra vez?"</td><td class="n">$18.990</td><td>Pagó con Mercado Pago</td></tr>
+<tr><td>Jue 19-11 20:22</td><td>Video upa (versión B)</td><td class="n">$18.990</td><td>Utmify la mostraba pendiente; se confirmó en la tienda</td></tr>
+<tr><td>Vie 20-11 19:40</td><td>Video upa (versión B), en el feed de Instagram</td><td class="n"><b>$27.980</b></td><td>Sumó el extra <b>"De tu cama a su cuna"</b> ($8.990). Había dejado el carrito y <b>volvió por el mail automático</b>. Es la primera venta recuperada por mail.</td></tr>
+</table></div>
+<p class="why">De las 7 compradoras, 2 ya agregaron un extra del carrito.</p>
+
+<h2>2. La página de venta: se midió y queda quieta</h2>
+<p>El jueves 19-11 la página cumplió 48 horas sin cambios y se midió con Clarity, que graba cómo navega la gente. Nuestras propias visitas de prueba no se contaron.</p>
+<div class="tablewrap"><table>
+<tr><th>Qué se midió</th><th>Resultado</th><th></th></tr>
+<tr><td>Visitas reales (jue 19-11 a la mañana)</td><td>88 visitas, 1 compra = 1,1 %</td><td><span class="tag warnt">Bajo la vara</span></td></tr>
+<tr><td>Visitas reales (jue 19-11 a la noche, con las ventas del Test 3)</td><td>~117 visitas, 3 compras = <b>2,6 %</b></td><td><span class="tag win">Pasa la vara (2 %)</span></td></tr>
+<tr><td>¿Los clics que llegan son de calidad?</td><td>95 % llega bien a la página (vara: 65 %)</td><td><span class="tag win">Bien</span></td></tr>
+<tr><td>¿Cuántos bajan de la primera pantalla?</td><td>7 de cada 10 no bajan nunca</td><td><span class="tag warnt">A mejorar</span></td></tr>
+<tr><td>¿Qué es lo que más tocan?</td><td>La pregunta "¿Para qué edad sirve?", más que el botón de compra</td><td><span class="tag warnt">Dato útil</span></td></tr>
+</table></div>
+<ul>
+  <li><b>Se preparó un cambio</b> para la primera pantalla: mostrar arriba "Para bebés de 4 a 24 meses".</li>
+  <li><b>Se decidió no publicarlo.</b> Con el 2,6 % la página ya pasa la vara, y la escuela pide no tocar lo que anda: hacer un cambio cada 48 horas y solo si hace falta. El cambio queda guardado para cuando toque. Ahora lo que más mueve los números son <b>los anuncios</b>.</li>
+  <li>La compradora del jueves entró 3 veces en hora y media antes de comprar. No todas deciden en la primera visita.</li>
+</ul>
+
+<h2>3. Qué se hizo, día por día</h2>
+
+<div class="day">
+  <h3>Miércoles 18-11 (noche): Test 3 en marcha</h3>
+  <ul>
+    <li>El corte automático del Test 3 quedó programado para revisar cada 20 minutos con la regla de siempre: USD 10 sin venta se apaga y, con 1 venta, hasta USD 13.</li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Jueves 19-11: medición, revisión general y estudio del mercado</h3>
+  <ul>
+    <li><b>Medición de la página</b> (punto 2). Llegaron 2 ventas del Test 3 y la página quedó quieta.</li>
+    <li><b>Revisión general de todo el sistema:</b> tienda, píxel de Meta (la compra se registra con buena calidad), mails automáticos, Utmify, Clarity y el orgánico, que publica 3 veces por día. Todo funcionando. <b>Un aviso:</b> la cuenta de anuncios figura con un cobro pendiente. Si no entra el pago, Meta puede frenar los anuncios.</li>
+    <li><b>Estudio del mercado</b> (punto 4).</li>
+    <li><b>Encuesta a las 6 compradoras</b> que había hasta ese día: 3 preguntas por mail para entender por qué compraron y con qué palabras lo cuentan. Las respuestas se guardan tal cual. Se publican en la página solo si ellas dan permiso.</li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Viernes 20-11 (madrugada): estudio de Latinoamérica, regalos y test</h3>
+  <ul>
+    <li><b>Mercado por país:</b> apareció otra competidora argentina, "Duerme de Corrido", que vende a $16.990 con 8 regalos. México está casi sin competencia en pesos mexicanos. Colombia, Chile y Perú están flojos.</li>
+    <li><b>Regalos: de 1 a 3</b> en la página, el pago y el PDF. Más tarde se pasó a 5 (ver la tarde).</li>
+    <li><b>Test del sueño publicado</b> (punto 5).</li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Viernes 20-11 (mediodía): nos copiaron el nombre</h3>
+  <ul>
+    <li>Apareció una tienda que vende <b>"El método tranquilidad"</b>. Usa nuestro nombre, nuestra promesa y la misma estructura (3 clases + 10 noches) a $19.990. Cambiaron las palabras, pero la idea es la misma.</li>
+    <li>Se armó una <b>denuncia por uso de la marca</b> y se mandó a Impultienda. Ojo: la marca no está registrada en el INPI, así que lo más probable es que la rechacen.</li>
+    <li><b>Decisiones para diferenciarnos</b>:
+      <ul>
+        <li>"Método Tranquilito" es <b>el</b> nombre y no se inventa otro. Lo diferente se muestra en lo que trae adentro: el acompañamiento noche por noche y los regalos.</li>
+        <li>El Test 4 se reescribió con un ángulo propio.</li>
+        <li>Los regalos pasan de 3 a 5.</li>
+        <li>El trabajo se repartió en chats por tema para avanzar en paralelo.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Viernes 20-11 (tarde): la oferta nueva, publicada</h3>
+  <p class="why">Todas las copias argentinas regalan entre 3 y 8 cosas; nosotras teníamos 1. La escuela dice que la oferta tiene que valer mucho más de lo que se paga.</p>
+  <div class="ba"><div class="b"><small>Antes (18-11)</small>"De $74.980 a $18.990": el método más 1 regalo ("Para vos, mamá").</div><div class="a"><small>Ahora</small>"De $93.940 a $18.990": el método ($39.990) más 5 regalos que valen $53.950, cada uno con su tapa y su precio tachado.</div></div>
+  <div class="tablewrap"><table>
+    <tr><th>Regalo</th><th>Valor</th><th>Qué es</th></tr>
+    <tr><td>1 · Duerme sin la teta en 2 días</td><td class="n">$14.990</td><td>Es el regalo principal en los anuncios. Antes se vendía aparte en el carrito.</td></tr>
+    <tr><td>2 · Para vos, mamá</td><td class="n">$12.990</td><td>Cómo llegar entera a la noche 10</td></tr>
+    <tr><td>3 · Que papá también lo pueda dormir</td><td class="n">$9.990</td><td>Para repartir las noches</td></tr>
+    <tr><td>4 · Te acompañamos noche a noche</td><td class="n">$8.990</td><td>Un mail por noche durante el plan (ver abajo)</td></tr>
+    <tr><td>5 · La tarjeta de las 3 de la mañana</td><td class="n">$6.990</td><td>Una hoja para tener a mano cuando se despierta</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Igual en todos lados:</b> página de venta, página de pago y resumen del pedido, donde ahora se lee "+5 bonos gratis" y "Ahorrás $74.950".</li>
+    <li><b>Mails noche a noche activados:</b> son 8 mails nuevos que se suman a los 4 que ya había. Así la compradora recibe un mail casi todas las noches del plan, hasta el día 15. Esto cumple lo que promete el regalo 4.</li>
+    <li><b>Página de pago más clara:</b> los regalos pasaron de un párrafo corrido a una lista con su tapa, y los regalos 4 y 5 tienen tapa con foto (antes eran un emoji).</li>
+    <li><b>Carrito ordenado de más barato a más caro</b> ($7.990 → $8.990 → $9.990 → $12.990), como enseña la escuela: los extras arrancan bajos y suben. En el lugar de "sin la teta", que ahora es regalo, entró <b>"De tu cama a su cuna"</b> ($8.990), que vendió esa misma noche.</li>
+  </ul>
+</div>
+
+<div class="day">
+  <h3>Viernes 20-11 (noche): test corregido y Test 4 prendido</h3>
+  <ul>
+    <li>Se corrigió el test del sueño y la venta 7 entró a las 19:40.</li>
+    <li>A las 21:40 se prendió el <b>Test 4</b> (punto 6).</li>
+  </ul>
+</div>
+
+<h2>4. El mercado: qué encontramos</h2>
+<ul>
+  <li><b>Afuera, 7 marcas venden esto con muchos anuncios prendidos hace meses</b> (Brasil, México y otros países). Es la señal de que el producto se vende.</li>
+  <li><b>En Argentina hay ~12 copias en pesos y ninguna se destaca.</b> Todas regalan entre 3 y 8 cosas, y una copió nuestro nombre.</li>
+  <li><b>Ángulo nuevo que pasa la regla de 3: "que duerma mejor sin destetarlo"</b>, para la mamá que da la teta y no quiere elegir entre la teta y dormir. Es la base del Test 4.</li>
+  <li><b>México</b> aparece casi sin competencia en moneda local. Queda anotado para cuando toque abrir el segundo país.</li>
+  <li>Este estudio pasa a hacerse <b>todas las semanas</b> (los jueves), a la par de mirar nuestros números.</li>
+</ul>
+
+<h2>5. Test del sueño: la puerta nueva</h2>
+<p>Es un cuestionario gratis de unos 3 minutos. Está copiado de lo que mejor le funciona a una marca grande de Latinoamérica.</p>
+<ul>
+  <li>La mamá responde cómo duerme su bebé y recibe un resultado con el nombre del bebé que le explica qué lo está despertando.</li>
+  <li>El resultado le presenta el Método Tranquilito igual que la página de venta (lo que recibe, los 5 regalos y el precio) y todos los botones la llevan a pagar.</li>
+  <li>Deja su mail, y eso nos sirve para escribirle aunque no compre ese día.</li>
+  <li>Está dentro de nuestra tienda: <a href="https://www.metodotranquilito.online/test">www.metodotranquilito.online/test</a> (pueden hacerlo, no cuesta nada).</li>
+  <li>Se probó de punta a punta como si fuera una clienta nueva, hasta la página de pago real.</li>
+  <li>Desde hoy le manda gente un anuncio del Test 4.</li>
+</ul>
+
+<h2>6. Test 4: las 5 piezas que corren desde hoy</h2>
+<p>Cómo se eligieron:</p>
+<ul>
+  <li><b>2 piezas con el ángulo nuevo "sin destetarlo"</b>: un carrusel y un meme.</li>
+  <li><b>1 variación del ganador</b>: el video upa, con otro arranque.</li>
+  <li><b>2 formas nuevas sobre ángulos que ya venden</b>:
+    <ul>
+      <li>una mamá que habla a cámara, hecha con inteligencia artificial;</li>
+      <li>un video que lleva al test del sueño en vez de a la página de venta.</li>
+    </ul>
+  </li>
+  <li><b>Reglas de edición para todas las piezas:</b>
+    <ul>
+      <li>los colores de la marca siempre;</li>
+      <li>música y sonidos propios en cada pieza;</li>
+      <li>un sonido en las palabras clave;</li>
+      <li>la tapa del PDF cuando se nombra el método;</li>
+      <li>el texto lejos de los bordes, para que Meta no lo tape.</li>
+    </ul>
+  </li>
+  <li>El regalo principal que se anuncia es "Duerme sin la teta en 2 días". El precio no aparece.</li>
+  <li>Cada pieza tiene USD 5 por día y la regla de corte de siempre. Hoy están en revisión de Meta.</li>
+</ul>
+
+<div class="pieces">
+  <div class="piece">
+    <div class="strip">
+      <img src="c1.jpg" alt="Tarjeta 1" loading="lazy"><img src="c2.jpg" alt="Tarjeta 2" loading="lazy"><img src="c3.jpg" alt="Tarjeta 3" loading="lazy"><img src="c4.jpg" alt="Tarjeta 4" loading="lazy"><img src="c5.jpg" alt="Tarjeta 5" loading="lazy"><img src="c6.jpg" alt="Tarjeta 6" loading="lazy">
+    </div>
+    <h3>1 · ¿Destetarlo? Antes, deslizá</h3>
+    <p class="why">Carrusel de 6 tarjetas (deslizá) con el ángulo nuevo "sin destetarlo". Mismo formato que el carrusel que vendió en el Test 3.</p>
+    <div class="copy">¿Querés que duerma más pero no querés destetarlo? 🤱
+🌙 No tenés que elegir entre la teta y dormir
+🧩 Con el Método Tranquilito le enseñás otra forma de volver a dormirse
+📅 Noche por noche te digo qué hacer, 10 noches con vos al lado
+🤍 Sin dejarlo llorar solo
+🎁 De regalo: Duerme sin la teta en 2 días + 4 bonus más (valor $53.950)</div>
+  </div>
+  <div class="piece">
+    <div class="strip">
+      <img src="m1.jpg" alt="Meme 1" loading="lazy"><img src="m2.jpg" alt="Meme 2" loading="lazy"><img src="m3.jpg" alt="Meme 3" loading="lazy"><img src="m4.jpg" alt="Meme 4" loading="lazy"><img src="m5.jpg" alt="Meme 5" loading="lazy">
+    </div>
+    <h3>2 · ¿Teta o dormir? Las dos</h3>
+    <p class="why">Meme en tarjetas (deslizá), en la línea del meme que vendió en el Test 2, con el ángulo "sin destetarlo".</p>
+    <div class="copy">¿Teta o dormir? Las dos 🤱🌙
+😮‍💨 Si se despierta y solo vuelve a dormirse con la teta
+🧩 El Método Tranquilito te dice qué hacer, noche por noche
+🤍 Sin destetarlo y sin dejarlo llorar solo
+🎁 De regalo: Duerme sin la teta en 2 días + 4 bonus más</div>
+  </div>
+  <div class="piece">
+    <video src="t4-upa.mp4" poster="thumb-upa.jpg" controls playsinline preload="none"></video>
+    <h3>3 · ¿45 minutos a upa?</h3>
+    <p class="why">Variación del ganador del Test 3 (2 ventas a USD 6,30): mismo mensaje con otro arranque.</p>
+    <div class="copy">¿45 minutos a upa y apenas lo apoyás en la cuna abre los ojos? 🌙
+💛 No estás haciendo nada mal
+🧩 Aprendió a dormirse de una sola forma: en tus brazos
+🌱 Con el Método Tranquilito aprende a dormirse solito en 10 días
+🤍 Sin dejarlo llorar</div>
+  </div>
+  <div class="piece">
+    <video src="t4-ugc.mp4" poster="thumb-ugc.jpg" controls playsinline preload="none"></video>
+    <h3>4 · Una mamá que cuenta (a cámara)</h3>
+    <p class="why">Forma nueva: una mamá habla a cámara, hecha con inteligencia artificial y armada sobre un anuncio que vende hace meses. Ángulo: los despertares, sin dejarlo llorar.</p>
+    <div class="copy">¿Cuántas veces se despertó tu bebé anoche? 😮‍💨
+🤍 Para que duerma mejor NO hace falta dejarlo llorar
+🧩 Con el Método Tranquilito se duerme más fácil y se despierta menos
+📅 3 clases + plan de 10 noches</div>
+  </div>
+  <div class="piece">
+    <video src="t4-test.mp4" poster="thumb-test.jpg" controls playsinline preload="none"></video>
+    <h3>5 · ¿Qué lo está despertando? (al test)</h3>
+    <p class="why">Es el único anuncio que no va a la página de venta: lleva al test del sueño gratis. Sirve para medir si el test vende más que la página.</p>
+    <div class="copy">¿Otra vez?… y ni siquiera pasaron 2 horas 😮‍💨
+🧩 Descubrí por qué tu bebé se sigue despertando con este test gratis del Método Tranquilito
+⏱️ 3 minutos · 🤍 gratis</div>
+  </div>
+</div>
+<p class="why">El botón de todas las piezas es "Más información". Las referencias de la competencia no se publican acá.</p>
+
+<h2>7. Lo que sigue</h2>
+<ul class="check">
+  <li><b>Test 4:</b> corte automático con la regla de siempre: USD 10 sin venta se apaga y, con 1 venta, hasta USD 13. Antes de esos montos no se saca ninguna conclusión.</li>
+  <li><b>Test 3:</b> el video upa queda prendido. El carrusel "¿Otra vez?" se apaga si llega a USD 13 sin la segunda venta. Si conviene subirle el presupuesto al video upa lo decide Matías.</li>
+  <li><b>Cobro de la cuenta de anuncios:</b> hay que revisar la facturación para que Meta no frene los anuncios.</li>
+  <li><b>Página de venta:</b> quieta mientras siga pasando la vara.</li>
+  <li><b>Extras del carrito y oferta después de la compra:</b> se miden cuando haya 10 compradoras (hoy son 7).</li>
+  <li><b>Encuesta:</b> leer las respuestas de las compradoras y, con su permiso, sumar testimonios reales. Hoy la página no tiene ninguno.</li>
+  <li><b>Domingo 22-11:</b> repaso de metas. La primera (un anuncio con 2 ventas o más a menos de USD 10 cada una) ya está cumplida. La próxima es para el 29-11: 3 anuncios ganadores y un día sin perder plata.</li>
+  <li><b>Jueves 26-11:</b> nuevo estudio semanal del mercado.</li>
+</ul>
+
+<footer>Fuentes: Meta Ads (gasto total de cada anuncio, leído en vivo el 20-11 a las 22:00), Impultienda y Utmify (ventas reales), Clarity (navegación, sin nuestras visitas de prueba) y la Biblioteca de Anuncios de Meta. Montos en dólares; el método se vende a AR$ 18.990.</footer>
+</div>
+</body>
+</html>
